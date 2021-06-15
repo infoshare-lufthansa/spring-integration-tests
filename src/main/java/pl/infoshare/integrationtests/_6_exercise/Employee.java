@@ -1,7 +1,7 @@
-package pl.infoshare.integrationtests._6_exercise.employee;
+package pl.infoshare.integrationtests._6_exercise;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import pl.infoshare.integrationtests._6_exercise.employee.validator.MinDate;
+import pl.infoshare.integrationtests._6_exercise.validator.MinDate;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;

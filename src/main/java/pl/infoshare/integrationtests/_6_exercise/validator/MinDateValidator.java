@@ -1,4 +1,4 @@
-package pl.infoshare.integrationtests._6_exercise.employee.validator;
+package pl.infoshare.integrationtests._6_exercise.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
