@@ -1,4 +1,4 @@
-package pl.infoshare.integrationtests._6_exercise.company;
+package pl.infoshare.integrationtests._6_exercise;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.pl.NIP;

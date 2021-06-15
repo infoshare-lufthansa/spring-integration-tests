@@ -1,7 +1,6 @@
-package pl.infoshare.integrationtests._6_exercise.company;
+package pl.infoshare.integrationtests._6_exercise;
 
 import org.springframework.stereotype.Component;
-import pl.infoshare.integrationtests._6_exercise.employee.Employee;
 
 import java.util.ArrayList;
 import java.util.Collections;
