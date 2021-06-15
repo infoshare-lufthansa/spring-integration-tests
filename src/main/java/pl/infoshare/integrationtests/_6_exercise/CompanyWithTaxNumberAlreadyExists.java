@@ -1,4 +1,4 @@
-package pl.infoshare.integrationtests._6_exercise.company;
+package pl.infoshare.integrationtests._6_exercise;
 
 public class CompanyWithTaxNumberAlreadyExists extends RuntimeException {
 

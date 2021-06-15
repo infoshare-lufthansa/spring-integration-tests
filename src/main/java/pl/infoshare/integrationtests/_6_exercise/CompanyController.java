@@ -1,9 +1,8 @@
-package pl.infoshare.integrationtests._6_exercise.company;
+package pl.infoshare.integrationtests._6_exercise;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.infoshare.integrationtests._6_exercise.employee.Employee;
 
 import javax.validation.Valid;
 import java.net.URI;
