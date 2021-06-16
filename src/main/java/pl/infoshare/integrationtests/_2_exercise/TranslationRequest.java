@@ -10,11 +10,11 @@ public class TranslationRequest {
         this.translatedValue = translatedValue;
     }
 
-    public String getValue() {
+    public String getWord() {
         return value;
     }
 
-    public String getTranslatedValue() {
+    public String getTranslatedWord() {
         return translatedValue;
     }
 }
