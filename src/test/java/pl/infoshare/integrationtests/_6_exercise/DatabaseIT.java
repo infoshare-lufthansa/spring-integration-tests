@@ -1,4 +1,4 @@
-package pl.infoshare.integrationtests._7_exercise;
+package pl.infoshare.integrationtests._6_exercise;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.testcontainers.containers.PostgreSQLContainer;
