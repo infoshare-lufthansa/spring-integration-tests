@@ -12,7 +12,13 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@SpringBootTest(properties = {
+        "measure.default-unit=meter",
+        "measure.unit-factor.meter=1",
+        "measure.unit-factor.kilometer=0.001",
+        "measure.unit-factor.centimeter=100",
+        "measure.unit-factor.feet=3.28084"
+})
 class MeasureUnitServiceTest {
 
     @Autowired
