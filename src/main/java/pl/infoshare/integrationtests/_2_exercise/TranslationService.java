@@ -1,8 +1,7 @@
 package pl.infoshare.integrationtests._2_exercise;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * Napisz test integracyjny, który sprawdzi czy nowa translacja została zapisana poprawnie. Z racji tego, że repozytorium
@@ -11,21 +10,21 @@ import java.util.Optional;
 @Component
 public class TranslationService {
 
-    private final TranslationProperties translationProperties;
+    private final String languageToTranslate;
     private final TranslationRepository translationRepository;
 
-    public TranslationService(TranslationProperties translationProperties, TranslationRepository translationRepository) {
-        this.translationProperties = translationProperties;
+    public TranslationService(@Value("${translations.default}") String languageToTranslate,
+                              TranslationRepository translationRepository) {
+        this.languageToTranslate = languageToTranslate;
         this.translationRepository = translationRepository;
     }
 
-    public void translate(TranslationRequest translationRequest, String language) {
-        var languageToTranslate = Optional.ofNullable(language)
-                .orElse(translationProperties.getDefaultLanguage());
-
-        if (!translationRepository.existsByValueAndLanguage(translationRequest.getValue(), languageToTranslate)) {
-            var translation = new Translation(translationRequest.getValue(), languageToTranslate, translationRequest.getTranslatedValue());
+    public void translate(TranslationRequest translationRequest) {
+        if (!translationRepository.existsByValueAndLanguage(translationRequest.getWord(), languageToTranslate)) {
+            var translation = new Translation(translationRequest.getWord(), languageToTranslate, translationRequest.getTranslatedWord());
             translationRepository.save(translation);
+        } else {
+            throw new TranslationAlreadyExistsException(translationRequest.getWord(), languageToTranslate);
         }
     }
 }

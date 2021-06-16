@@ -8,7 +8,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import pl.infoshare.integrationtests._4_exercise.model.AddNamesRequest;
+import pl.infoshare.integrationtests._4_exercise.names.NameDay;
 import pl.infoshare.integrationtests._4_exercise.names.NameDayRepository;
 
 import java.time.LocalDate;
@@ -21,6 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 class DateInfoControllerTest {
@@ -41,7 +44,11 @@ class DateInfoControllerTest {
     void should_fetch_date_info() throws Exception {
         // given
         var givenDate = LocalDate.of(2020, Month.NOVEMBER, 1);
-        nameDayRepository.addToDate(givenDate, List.of("Maciek", "Anastazja"));
+
+        var nameDay = new NameDay();
+        nameDay.setDate(givenDate);
+        nameDay.setNames(List.of("Maciek", "Anastazja"));
+        nameDayRepository.save(nameDay);
 
         // when
         mockMvc.perform(get("/date-info/{date}", givenDate))
@@ -78,7 +85,7 @@ class DateInfoControllerTest {
                 .andExpect(status().isCreated());
 
         // then
-        var result = nameDayRepository.getNameDaysForDate(givenDate);
-        assertThat(result).hasSize(1).containsOnly("Maciek");
+        var result = nameDayRepository.findOneByDate(givenDate);
+        assertThat(result).hasValueSatisfying(n -> assertThat(n.getNames()).containsOnly("Maciek"));
     }
 }
