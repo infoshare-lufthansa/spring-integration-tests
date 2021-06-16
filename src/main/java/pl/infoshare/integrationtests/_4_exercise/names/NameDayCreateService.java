@@ -17,6 +17,11 @@ public class NameDayCreateService {
 
     public void addNamesToDate(String stringDate, AddNamesRequest addNamesRequest) {
         var date = dateParser.parse(stringDate);
-        nameDayRepository.addToDate(date, addNamesRequest.getNames());
+
+        var nameDay = new NameDay();
+        nameDay.setDate(date);
+        nameDay.setNames(addNamesRequest.getNames());
+
+        nameDayRepository.save(nameDay);
     }
 }

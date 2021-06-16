@@ -1,0 +1,13 @@
+POST http://localhost:8080/date-info/2021-02-28/day-names
+Content-Type: application/json
+
+{
+  "names": ["Maciek", "Olaf"]
+}
+
+###
+GET http://localhost:8080/date-info/2021-02-28
+
+###
+
+GET http://localhost:8080/date-info/2020-01-01
