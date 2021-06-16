@@ -8,9 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@SpringBootTest("translations.default=pl")
 class TranslationServiceTest {
 
     @Autowired
@@ -21,43 +22,23 @@ class TranslationServiceTest {
     private ArgumentCaptor<Translation> translationCaptor;
 
     @Test
-    void should_save_translation_for_given_language() {
+    void should_save_translation() {
         // given
         var givenRequest = new TranslationRequest("test", "test_pl");
-        var givenLanguage = "pl";
-
-        when(translationRepository.existsByValueAndLanguage("test", givenLanguage)).thenReturn(false);
-
-        // when
-        translationService.translate(givenRequest, givenLanguage);
-
-        // then
-        verify(translationRepository).save(translationCaptor.capture());
-
-        var result = translationCaptor.getValue();
-        assertThat(result.getLanguage()).isEqualTo(givenLanguage);
-        assertThat(result.getValue()).isEqualTo("test");
-        assertThat(result.getTranslatedValue()).isEqualTo("test_pl");
-    }
-
-    @Test
-    void should_save_translation_for_default_language() {
-        // given
-        var givenRequest = new TranslationRequest("test", "test_en");
         String givenLanguage = null;
 
         when(translationRepository.existsByValueAndLanguage("test", givenLanguage)).thenReturn(false);
 
         // when
-        translationService.translate(givenRequest, givenLanguage);
+        translationService.translate(givenRequest);
 
         // then
         verify(translationRepository).save(translationCaptor.capture());
 
         var result = translationCaptor.getValue();
-        assertThat(result.getLanguage()).isEqualTo("en");
+        assertThat(result.getLanguage()).isEqualTo("pl");
         assertThat(result.getValue()).isEqualTo("test");
-        assertThat(result.getTranslatedValue()).isEqualTo("test_en");
+        assertThat(result.getTranslatedValue()).isEqualTo("test_pl");
     }
 
     @Test
@@ -69,7 +50,9 @@ class TranslationServiceTest {
         when(translationRepository.existsByValueAndLanguage("test", givenLanguage)).thenReturn(true);
 
         // when
-        translationService.translate(givenRequest, givenLanguage);
+        assertThatThrownBy(() -> translationService.translate(givenRequest))
+                .isInstanceOf(TranslationAlreadyExistsException.class)
+                .hasMessage("Translation for word test in language pl already exists");
 
         // then
         verify(translationRepository, never()).save(isA(Translation.class));
