@@ -4,9 +4,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
 
-/**
- * Sprawdź zachowanie tego serwisu w zależności od tego czy profil email jest aktywny.
- */
 @Component
 public class UserNotifierService {
 
