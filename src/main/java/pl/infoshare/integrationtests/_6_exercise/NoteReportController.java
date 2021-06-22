@@ -16,6 +16,8 @@ public class NoteReportController {
         this.noteReportRepository = noteReportRepository;
     }
 
+
+
     @GetMapping("/reports/note")
     public List<NoteReport> generateReport() {
         return noteReportRepository.generateReport();
