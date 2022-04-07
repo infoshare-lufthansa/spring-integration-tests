@@ -5,12 +5,12 @@ import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserNotifierService {
+public class UserNotificationService {
 
     private final Environment environment;
     private final UserMailSender userMailSender;
 
-    public UserNotifierService(Environment environment, UserMailSender userMailSender) {
+    public UserNotificationService(Environment environment, UserMailSender userMailSender) {
         this.environment = environment;
         this.userMailSender = userMailSender;
     }
