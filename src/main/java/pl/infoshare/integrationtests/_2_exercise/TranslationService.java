@@ -19,10 +19,11 @@ public class TranslationService {
         this.translationRepository = translationRepository;
     }
 
-    public void translate(TranslationRequest translationRequest) {
+    public Translation translate(TranslationRequest translationRequest) {
         if (!translationRepository.existsByValueAndLanguage(translationRequest.getWord(), languageToTranslate)) {
             var translation = new Translation(translationRequest.getWord(), languageToTranslate, translationRequest.getTranslatedWord());
             translationRepository.save(translation);
+            return translation;
         } else {
             throw new TranslationAlreadyExistsException(translationRequest.getWord(), languageToTranslate);
         }
