@@ -40,11 +40,6 @@ public class NoteCreateService {
     }
 
     private Tag getOrCreate(String tag) {
-        var existingTag = tagRepository.findByValue(tag);
-
-        return existingTag
-                .map(Tag::incrementUsed)
-                .map(tagRepository::save)
-                .orElseGet(() -> tagRepository.save(Tag.newTag(tag)));
+        return null;
     }
 }
