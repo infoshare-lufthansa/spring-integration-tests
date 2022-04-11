@@ -5,24 +5,21 @@ import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserNotificationService {
+public class UserNotificationFactory {
 
     private final Environment environment;
-    private final UserMailSender userMailSender;
 
-    public UserNotificationService(Environment environment, UserMailSender userMailSender) {
+    public UserNotificationFactory(Environment environment) {
         this.environment = environment;
-        this.userMailSender = userMailSender;
     }
 
-    public UserNotificationResult sendNotification(UserMail userMail) {
+    public UserNotification sendNotification(UserMail userMail) {
         if (shouldSendEmail()) {
             var message = generateMessage(userMail);
-            userMailSender.sendMail(userMail.getEmail(), message);
-            return UserNotificationResult.SUCCESS;
+            return UserNotification.success(message, userMail.getEmail());
         }
 
-        return UserNotificationResult.INACTIVE;
+        return UserNotification.inactive(userMail.getEmail());
     }
 
     private boolean shouldSendEmail() {
